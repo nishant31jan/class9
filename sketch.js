@@ -1,27 +1,44 @@
-var n;
+var btn_red;
+var btn_green;
+var btn_blue;
+
+var r = 0;
+var g = 0;
+var b = 0;
+
 function setup() {
-  createCanvas(400,400);
- n=createSprite(200,200,20,20);
+createCanvas(400, 400); 
+btn_red=createButton("RED");
+btn_red.position=(100,50);
+btn_red.mousePressed(red_bg); 
+
+btn_green=createButton("GREEN");
+btn_green.position=(50,50);
+btn_green.mousePressed(green_bg);
+
+btn_blue=createButton("BLUE");
+btn_blue.position=(200,50);
+btn_blue.mousePressed(blue_bg)
 }
 
-function draw() 
+function draw() {
+  background(r,g,b);
+}
+function red_bg()
 {
-  if(keyIsDown(RIGHT_ARROW)){
-    n.x=n.x+5
-  }
-  if(keyIsDown(LEFT_ARROW)){
-    n.x=n.x-5
-  }
-  if(keyIsDown(UP_ARROW)){
-    n.y=n.y-5
-  }
-  if(keyIsDown(DOWN_ARROW)){
-    n.y=n.y+5
-  }
-  background(30);
-drawSprites();
+  r = 255;
+  g = 0;
+  b = 0;
 }
-
-
-
-
+function green_bg()
+{
+  r = 0;
+  g = 255;
+  b = 0;
+}
+function blue_bg()
+{
+  r = 0;
+  g = 0;
+  b = 255;
+}
