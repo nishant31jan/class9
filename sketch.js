@@ -1,44 +1,43 @@
-var btn_red;
-var btn_green;
-var btn_blue;
+var seaImg;
+var seablock;
+var shipImg1,ship2;
 
-var r = 0;
-var g = 0;
-var b = 0;
+function preload(){
+  
+  seaImg=loadImage("sea.png");
+  
+  shipImg1=loadAnimation("ship-1.png","ship-2.png","ship-3.png","ship-4.png");
 
-function setup() {
-createCanvas(400, 400); 
-btn_red=createButton("RED");
-btn_red.position=(100,50);
-btn_red.mousePressed(red_bg); 
-
-btn_green=createButton("GREEN");
-btn_green.position=(50,50);
-btn_green.mousePressed(green_bg);
-
-btn_blue=createButton("BLUE");
-btn_blue.position=(200,50);
-btn_blue.mousePressed(blue_bg)
 }
+
+function setup(){
+  createCanvas(400,400);
+
+  seablock=createSprite(400,200);
+  seablock.addImage("horizon",seaImg);
+  seablock.scale=0.2
+  
+ 
+  ship2=createSprite(200,280,50,30);
+ship2.addAnimation("rocking",shipImg1);
+ship2.scale=0.15
+
+
+
+}
+
+
 
 function draw() {
-  background(r,g,b);
-}
-function red_bg()
-{
-  r = 255;
-  g = 0;
-  b = 0;
-}
-function green_bg()
-{
-  r = 0;
-  g = 255;
-  b = 0;
-}
-function blue_bg()
-{
-  r = 0;
-  g = 0;
-  b = 255;
+  background("white");
+
+  seablock.velocityX=-3
+
+  console.log(seablock.x)
+
+ if(seablock.x<0){
+   seablock.x=seablock.width/10
+ }
+
+ drawSprites();
 }
