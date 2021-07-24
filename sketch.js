@@ -1,65 +1,142 @@
-var leaf1;
-var leafImg;
-var appleImg;
-var apple1;
-var garden,rabbit;
-var gardenImg,rabbitImg;
+var bow , arrow,  background, score;
+var bowImage, arrowImage, green_balloonImage, red_balloonImage, pink_balloonImage ,blue_balloonImage, backgroundImage;
 
 function preload(){
-  gardenImg = loadImage("garden.png");
-  rabbitImg = loadImage("rabbit.png");
-  appleImg = loadImage("apple.png");
-  leafImg = loadImage("orangeLeaf.png");
+  
+  backgroundImage = loadImage("background0.png");
+  arrowImage = loadImage("arrow0.png");
+  bowImage = loadImage("bow0.png");
+  red_balloonImage = loadImage("red_balloon0.png");
+  green_balloonImage = loadImage("green_balloon0.png");
+  blue_balloonImage = loadImage("blue_balloon0.png");
+  pink_balloonImage = loadImage("pink_balloon0.png");
+
+  
 }
 
-function setup(){
-  
-  createCanvas(400,400);
-  
-// Moving background
-garden=createSprite(200,200);
-garden.addImage(gardenImg);
 
-//creating boy running
-rabbit = createSprite(180,340,30,30);
-rabbit.scale =0.09;
-rabbit.addImage(rabbitImg);
+
+function setup() {
+  createCanvas(400, 400);
+
+  score=0;
+
+  textSize=20;
+
+  
+  //creating background
+  scene = createSprite(0,0,400,400);
+  scene.addImage(backgroundImage);
+  scene.scale = 2.5
+  
+  // creating bow to shoot arrow
+  bow = createSprite(380,220,20,50);
+  bow.addImage(bowImage); 
+  bow.scale = 1;
+  
 }
-
 
 function draw() {
-  background(0);
+ background(0);
 
-  rabbit.x=mouseX;
+  // moving ground
+    scene.velocityX = -3 
+
+    if (scene.x < 0){
+      scene.x = scene.width/2;
+    }
   
-  edges= createEdgeSprites();
-  rabbit.collide(edges);
+  //moving bow
+  bow.y = World.mouseY
+  
+   // release arrow when space key is pressed
+  if (keyDown("space")) {
+    createArrow();
+  
+  }
+  
+  //creating continous balloons
+  var select_balloon = Math.round(random(1,4));
+  
+  
+  if (World.frameCount % 100 == 0) {
+    if (select_balloon == 1) {
+      redBalloon() 
+    }
+  }
 
-  createLeaves();
+if (World.frameCount % 100 == 0){
+  if(select_balloon == 2){
+    blueBalloon();
+}  
+}
 
-  createApples();
+if (World.frameCount % 100 == 0) {
+  if (select_balloon == 3) {
+    greenBalloon() 
+  }
+}
+
+if (World.frameCount % 100 == 0) {
+  if (select_balloon == 4) {
+    pinkBalloon() 
+  }
+}
+  
 
   drawSprites();
+
+  text("Score="+ score,270,30 );
 }
 
-function createApples()
-{
-  if(frameCount%80==0){
-  apple1=createSprite(200,0,20,20);
-  apple1.velocityY=3;
-  apple1.scale=0.07
-  apple1.x=Math.round(random(20,370));
-  apple1.addImage("apple",appleImg);
-}
+
+// Creating  arrows for bow
+ function createArrow() {
+  var arrow= createSprite(100, 100, 60, 10);
+  arrow.addImage(arrowImage);
+  arrow.x = 360;
+  arrow.y=bow.y;
+  arrow.velocityX = -4;
+  arrow.lifetime = 100;
+  arrow.scale = 0.3;
 }
 
-function createLeaves()
-{
-  if(frameCount%80==0){
-  leaf1=createSprite(360,40,20,20);
-  leaf1.velocityY=3;
-  leaf1.scale=0.07
-  leaf1.x=Math.round(random(20,370));
-  leaf1.addImage("leaf",leafImg);
+
+function redBalloon() {
+  var red = createSprite(0,Math.round(random(20, 370)), 10, 10);
+  red.addImage(red_balloonImage);
+  red.velocityX = 3;
+  red.lifetime = 150;
+  red.scale = 0.1;
+
 }
+
+function blueBalloon() {
+  //write code for spwaning blue balloons
+  var blue = createSprite(4,Math.round(random(20, 370)), 20, 20);
+  blue.addImage(blue_balloonImage);
+  blue.velocityX = 3;
+  blue.lifetime = 150;
+  blue.scale = 0.1;
+
+}
+
+function greenBalloon() {
+  //write code for spwaning green balloons
+  var green = createSprite(4,Math.round(random(20, 370)), 20, 20);
+  green.addImage(green_balloonImage);
+  green.velocityX = 3;
+  green.lifetime = 150;
+  green.scale = 0.1;
+
+}
+
+function pinkBalloon() {
+  //write code for spwaning pink balloons
+  var pink = createSprite(4,Math.round(random(20, 370)), 20, 20);
+  pink.addImage(pink_balloonImage);
+  pink.velocityX = 3;
+  pink.lifetime = 150;
+  pink.scale = 1.1;
+
 }
